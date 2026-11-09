@@ -44,10 +44,138 @@
 <div class="callout"><strong>现在盖住例题</strong><p>重新写一遍 λ = 3 时的矩阵和两行方程。然后去做第 2 题，把这个流程用到另一组数字上。</p></div>
 </section>
 <section id="practice"><div class="section-num">03</div><h2>独立练四道题</h2><p>先在空白处或草稿纸上写。卡住时只展开提示。第 3、4 题是按往年题型改编的练习。</p><noscript><p>提示和答案仍可展开。启用 JavaScript 后可以保留勾选和草稿。</p></noscript>
-<div class="exercise" id="q1"><div class="ex-top"><span class="ex-no">01</span><div><p class="eyebrow">基础题</p><h3>行化简求秩和核</h3></div></div><div class="equation">B = <span class="matrix" role="img" aria-label="3 行 3 列，1、2、1；2、4、2；0、1、1"><span class="matrix-grid" style="--cols:3" aria-hidden="true"><span>1</span><span>2</span><span>1</span><span>2</span><span>4</span><span>2</span><span>0</span><span>1</span><span>1</span></span></span></div><p>求 B 的秩、核的维数，以及核的一组基。</p><label class="work-label" for="work-1">我的演算</label><textarea id="work-1" rows="3" spellcheck="false" placeholder="可以在这里写，也可以用草稿纸。"></textarea><details><summary>看起手提示</summary><p>先把第二行减去第一行的两倍，再把零行移到底部。</p></details><details class="solution"><summary>看逐步答案</summary><ol class="steps"><li><strong>消元。</strong><div class="equation"><span class="matrix" role="img" aria-label="3 行 3 列，1、2、1；2、4、2；0、1、1"><span class="matrix-grid" style="--cols:3" aria-hidden="true"><span>1</span><span>2</span><span>1</span><span>2</span><span>4</span><span>2</span><span>0</span><span>1</span><span>1</span></span></span> → <span class="matrix" role="img" aria-label="3 行 3 列，1、2、1；0、0、0；0、1、1"><span class="matrix-grid" style="--cols:3" aria-hidden="true"><span>1</span><span>2</span><span>1</span><span>0</span><span>0</span><span>0</span><span>0</span><span>1</span><span>1</span></span></span> → <span class="matrix" role="img" aria-label="3 行 3 列，1、2、1；0、1、1；0、0、0"><span class="matrix-grid" style="--cols:3" aria-hidden="true"><span>1</span><span>2</span><span>1</span><span>0</span><span>1</span><span>1</span><span>0</span><span>0</span><span>0</span></span></span></div></li><li><strong>数主元。</strong> 第一、二列各有一个主元，秩为 2。矩阵有 3 列，所以核的维数是 3 − 2 = 1。</li><li><strong>回代。</strong> 从第二行得 x₂ + x₃ = 0。令 x₃ = t，得到 x₂ = −t。代入第一行得 x₁ − 2t + t = 0，所以 x₁ = t。</li><li><strong>写基并验算。</strong> 通解为 t(1, −1, 1)ᵀ。取 t = 1，得到基向量 (1, −1, 1)ᵀ。代回原矩阵，三行分别是 1 − 2 + 1、2 − 4 + 2、−1 + 1，均为 0。</li></ol></details><label class="check"><input type="checkbox" data-check="1"> 我能独立完成这题</label></div>
-<div class="exercise" id="q2"><div class="ex-top"><span class="ex-no">02</span><div><p class="eyebrow">基础题</p><h3>求特征值和特征向量</h3></div></div><div class="equation">C = <span class="matrix" role="img" aria-label="2 行 2 列，1、1；0、3"><span class="matrix-grid" style="--cols:2" aria-hidden="true"><span>1</span><span>1</span><span>0</span><span>3</span></span></span></div><p>求两个特征值，各写出一个对应的非零特征向量。</p><label class="work-label" for="work-2">我的演算</label><textarea id="work-2" rows="3" spellcheck="false" placeholder="可以在这里写，也可以用草稿纸。"></textarea><details><summary>看起手提示</summary><p>C 是上三角矩阵。读出特征值后，分别写出 C − I 和 C − 3I。</p></details><details class="solution"><summary>看逐步答案</summary><ol class="steps"><li><strong>找特征值。</strong> 对角线是 1 和 3，所以 λ = 1 或 3。</li><li><strong>解第一个方程组。</strong><div class="equation">C − I = <span class="matrix" role="img" aria-label="2 行 2 列，0、1；0、2"><span class="matrix-grid" style="--cols:2" aria-hidden="true"><span>0</span><span>1</span><span>0</span><span>2</span></span></span></div>两行分别是 x₂ = 0、2x₂ = 0。取 x₁ = 1 得 (1, 0)ᵀ，乘 C 得 (1, 0)ᵀ。</li><li><strong>解第二个方程组。</strong><div class="equation">C − 3I = <span class="matrix" role="img" aria-label="2 行 2 列，−2、1；0、0"><span class="matrix-grid" style="--cols:2" aria-hidden="true"><span>−2</span><span>1</span><span>0</span><span>0</span></span></span></div>第一行是 −2x₁ + x₂ = 0，第二行是 0 = 0。取 x₁ = 1，则 x₂ = 2，得 (1, 2)ᵀ。乘 C 得 (1 + 2, 3·2)ᵀ = (3, 6)ᵀ，等于原向量的 3 倍。</li></ol></details><label class="check"><input type="checkbox" data-check="2"> 我能独立完成这题</label></div>
-<div class="exercise" id="q3"><div class="ex-top"><span class="ex-no">03</span><div><p class="eyebrow">按往年题型改编</p><h3>算复矩阵的最大行和</h3></div></div><div class="equation">D = <span class="matrix" role="img" aria-label="2 行 2 列，1、1 + 2i；2 − 2i、3"><span class="matrix-grid" style="--cols:2" aria-hidden="true"><span>1</span><span>1 + 2<i>i</i></span><span>2 − 2<i>i</i></span><span>3</span></span></span></div><p>求矩阵 ∞ 范数 <span class="math">‖D‖<sub>∞</sub></span>。</p><label class="work-label" for="work-3">我的演算</label><textarea id="work-3" rows="3" spellcheck="false" placeholder="可以在这里写，也可以用草稿纸。"></textarea><details><summary>看起手提示</summary><p>分别取四个元素的模。先在每一行内部相加，再在两行之间比较。</p></details><details class="solution"><summary>看逐步答案</summary><ol class="steps"><li><strong>逐项取模。</strong> |1| = 1，|1 + 2i| = √(1² + 2²) = √5，|2 − 2i| = √(2² + (−2)²) = 2√2，|3| = 3。</li><li><strong>算行和。</strong> 第一行是 1 + √5，第二行是 2√2 + 3。</li><li><strong>取最大。</strong> 3 > 1，且 2√2 = √8 > √5，所以第二行较大，答案是 3 + 2√2。</li></ol></details><label class="check"><input type="checkbox" data-check="3"> 我能独立完成这题</label></div>
-<div class="exercise" id="q4"><div class="ex-top"><span class="ex-no">04</span><div><p class="eyebrow">按往年题型改编</p><h3>分开算三种范数</h3></div></div><div class="equation">A = <span class="matrix" role="img" aria-label="3 行 3 列，1、i、0；i、−1、2；0、i、1"><span class="matrix-grid" style="--cols:3" aria-hidden="true"><span>1</span><span><i>i</i></span><span>0</span><span><i>i</i></span><span>−1</span><span>2</span><span>0</span><span><i>i</i></span><span>1</span></span></span>， b = <span class="matrix" role="img" aria-label="3 行 1 列，1；2i；1"><span class="matrix-grid" style="--cols:1" aria-hidden="true"><span>1</span><span>2<i>i</i></span><span>1</span></span></span></div><p>求 <span class="math">‖b‖<sub>1</sub> + ‖Ab‖<sub>∞</sub> + ‖A‖<sub>1</sub></span>。</p><label class="work-label" for="work-4">我的演算</label><textarea id="work-4" rows="3" spellcheck="false" placeholder="可以在这里写，也可以用草稿纸。"></textarea><details><summary>看起手提示</summary><p>先算 b 的模之和，再算 Ab。最后一项按列求和。</p></details><details class="solution"><summary>看逐步答案</summary><ol class="steps"><li><strong>算 ‖b‖₁。</strong> 三项取模再相加，得到 1 + 2 + 1 = 4。</li><li><strong>逐行算 Ab。</strong> 第一行：1·1 + i·2i + 0·1 = 1 + 2i² = −1。第二行：i·1 − 1·2i + 2·1 = 2 − i。第三行：0·1 + i·2i + 1·1 = 1 + 2i² = −1。</li><li><strong>算 ‖Ab‖∞。</strong> 三个模分别为 1、√(2² + (−1)²) = √5、1，最大的是 √5。</li><li><strong>算 ‖A‖₁。</strong> 三列的模之和分别为 1 + 1 + 0 = 2、1 + 1 + 1 = 3、0 + 2 + 1 = 3，最大的是 3。</li><li><strong>把结果相加。</strong> 4 + √5 + 3 = 7 + √5。</li></ol></details><label class="check"><input type="checkbox" data-check="4"> 我能独立完成这题</label></div>
+<div class="exercise" id="q1"><div class="ex-top"><span class="ex-no">01</span><div><p class="eyebrow">基础题</p><h3>行化简求秩和核</h3></div></div><div class="equation">B = <span class="matrix" role="img" aria-label="3 行 3 列，1、2、1；2、4、2；0、1、1"><span class="matrix-grid" style="--cols:3" aria-hidden="true"><span>1</span><span>2</span><span>1</span><span>2</span><span>4</span><span>2</span><span>0</span><span>1</span><span>1</span></span></span></div><p>求 B 的秩、核的维数，以及核的一组基。</p><label class="work-label" for="work-1">我的演算</label><textarea id="work-1" rows="3" spellcheck="false" placeholder="可以在这里写，也可以用草稿纸。"></textarea><details><summary>看起手提示</summary><p>先把第二行减去第一行的两倍，再把零行移到底部。</p></details><details class="solution">
+  <summary>看逐步答案与讲解</summary>
+  <p class="solution-route"><strong>解题路线</strong> 行化简找主元 → 数秩和自由变量 → 写通解和基础解系 → 验算。</p>
+  <ol class="steps solution-steps">
+    <li>
+      <h4>用第一行消掉第二行的首项</h4>
+      <p>把三行记作 R₁、R₂、R₃。第二行的第一个数 2 是第一行首项 1 的两倍，所以用 R₂ − 2R₁。把某行的倍数加到另一行可以反向撤销，因此不改变 Bx = 0 的解。</p>
+      <div class="equation">(2, 4, 2) − 2(1, 2, 1) = (2 − 2, 4 − 4, 2 − 2) = (0, 0, 0)</div>
+    </li>
+    <li>
+      <h4>把零行移到底部</h4>
+      <p>第三行的首项已经是 0，不用再消第一列。交换第二、三行后，非零行的首个非零项依次在第 1、2 列，已经是阶梯形，不必再消第一行里的 2。</p>
+      <div class="equation"><span class="matrix" role="img" aria-label="3 行 3 列，1、2、1；2、4、2；0、1、1"><span class="matrix-grid" style="--cols:3" aria-hidden="true"><span>1</span><span>2</span><span>1</span><span>2</span><span>4</span><span>2</span><span>0</span><span>1</span><span>1</span></span></span> → <span class="matrix" role="img" aria-label="3 行 3 列，1、2、1；0、0、0；0、1、1"><span class="matrix-grid" style="--cols:3" aria-hidden="true"><span>1</span><span>2</span><span>1</span><span>0</span><span>0</span><span>0</span><span>0</span><span>1</span><span>1</span></span></span> → <span class="matrix" role="img" aria-label="3 行 3 列，1、2、1；0、1、1；0、0、0"><span class="matrix-grid" style="--cols:3" aria-hidden="true"><span>1</span><span>2</span><span>1</span><span>0</span><span>1</span><span>1</span><span>0</span><span>0</span><span>0</span></span></span></div>
+    </li>
+    <li>
+      <h4>数主元和自由变量</h4>
+      <p>第一、二列各有一个主元，所以秩是 2。第三列没有主元，对应的 x₃ 是自由变量。三个未知量里有两个主元变量，剩下一个自由变量，所以核的维数是 1。</p>
+      <div class="equation">rank(B) = 2，dim ker(B) = 3 − 2 = 1</div>
+    </li>
+    <li>
+      <h4>把两条非零行写成方程</h4>
+      <p>第 1 行给 x₁ + 2x₂ + x₃ = 0，第 2 行给 x₂ + x₃ = 0，第 3 行给 0 = 0。最后一行不增加约束，所以从更短的第 2 个方程开始回代。</p>
+      <p class="solution-work">设 x₃ = t，则 x₂ + t = 0，得到 x₂ = −t。<br>代入第一个方程：x₁ + 2(−t) + t = 0，即 x₁ − t = 0，所以 x₁ = t。</p>
+    </li>
+    <li>
+      <h4>区分通解和一组基</h4>
+      <p>任意 t 都给出一个解，这些解都是同一个非零向量的倍数。取 t = 1，得到的向量可以生成所有解，因此它单独就构成核的一组基。</p>
+      <div class="equation">x = (t, −t, t)ᵀ = t(1, −1, 1)ᵀ，基础解系为 {(1, −1, 1)ᵀ}</div>
+    </li>
+    <li>
+      <h4>用原矩阵验算</h4>
+      <p>把 (1, −1, 1)ᵀ 代回原来的 B。乘积的每个分量是一行和这个列向量对应相乘再相加。</p>
+      <p class="solution-work">第一行：1·1 + 2·(−1) + 1·1 = 0。<br>第二行：2·1 + 4·(−1) + 2·1 = 0。<br>第三行：0·1 + 1·(−1) + 1·1 = 0。</p>
+    </li>
+  </ol>
+  <p class="solution-note"><strong>容易丢分的地方</strong> 第三列虽然有非零数，却没有主元。判断自由变量看的是阶梯形里的主元位置。</p>
+</details><label class="check"><input type="checkbox" data-check="1"> 我能独立完成这题</label></div>
+<div class="exercise" id="q2"><div class="ex-top"><span class="ex-no">02</span><div><p class="eyebrow">基础题</p><h3>求特征值和特征向量</h3></div></div><div class="equation">C = <span class="matrix" role="img" aria-label="2 行 2 列，1、1；0、3"><span class="matrix-grid" style="--cols:2" aria-hidden="true"><span>1</span><span>1</span><span>0</span><span>3</span></span></span></div><p>求两个特征值，各写出一个对应的非零特征向量。</p><label class="work-label" for="work-2">我的演算</label><textarea id="work-2" rows="3" spellcheck="false" placeholder="可以在这里写，也可以用草稿纸。"></textarea><details><summary>看起手提示</summary><p>C 是上三角矩阵。读出特征值后，分别写出 C − I 和 C − 3I。</p></details><details class="solution">
+  <summary>看逐步答案与讲解</summary>
+  <p class="solution-route"><strong>解题路线</strong> 找特征值 → 每个特征值各解一次齐次方程组 → 用 Cv = λv 验算。</p>
+  <ol class="steps solution-steps">
+    <li>
+      <h4>用行列式找特征值</h4>
+      <p>特征向量必须非零。要让 (C − λI)v = 0 有非零解，C − λI 就必须不可逆，行列式为零。二阶行列式用主对角线乘积减副对角线乘积。</p>
+      <div class="equation">C − λI = <span class="matrix" role="img" aria-label="2 行 2 列，1 − λ、1；0、3 − λ"><span class="matrix-grid" style="--cols:2" aria-hidden="true"><span>1 − λ</span><span>1</span><span>0</span><span>3 − λ</span></span></span></div><div class="equation">det(C − λI) = (1 − λ)(3 − λ) − 1·0 = 0</div><p class="solution-work">两个因子至少一个为零，所以 λ = 1 或 λ = 3。下次见到上三角矩阵，也可以直接读对角线。</p>
+    </li>
+    <li>
+      <h4>代入 λ = 1 并逐行读方程</h4>
+      <p>只把对角元减 1，右上角的 1 照抄。用得到的矩阵乘 x = (x₁, x₂)ᵀ，右边是零向量。</p>
+      <div class="equation"><span class="matrix" role="img" aria-label="2 行 2 列，0、1；0、2"><span class="matrix-grid" style="--cols:2" aria-hidden="true"><span>0</span><span>1</span><span>0</span><span>2</span></span></span><span class="matrix" role="img" aria-label="2 行 1 列，x₁；x₂"><span class="matrix-grid" style="--cols:1" aria-hidden="true"><span>x₁</span><span>x₂</span></span></span> = <span class="matrix" role="img" aria-label="2 行 1 列，0；0"><span class="matrix-grid" style="--cols:1" aria-hidden="true"><span>0</span><span>0</span></span></span></div><p class="solution-work">第一行：0·x₁ + 1·x₂ = 0，所以 x₂ = 0。<br>第二行：0·x₁ + 2·x₂ = 0，也要求 x₂ = 0。</p>
+    </li>
+    <li>
+      <h4>为 λ = 1 选非零向量并验算</h4>
+      <p>方程没有限制 x₁。取 x₁ = 1、x₂ = 0，得到 v₁ = (1, 0)ᵀ。乘回原矩阵，比较它与 1·v₁ 是否相同。</p>
+      <div class="equation">Cv₁ = (1·1 + 1·0, 0·1 + 3·0)ᵀ = (1, 0)ᵀ = 1·v₁</div>
+    </li>
+    <li>
+      <h4>代入 λ = 3 并逐行读方程</h4>
+      <p>对角线分别变成 1 − 3 = −2、3 − 3 = 0，右上角仍是 1。</p>
+      <div class="equation"><span class="matrix" role="img" aria-label="2 行 2 列，−2、1；0、0"><span class="matrix-grid" style="--cols:2" aria-hidden="true"><span>−2</span><span>1</span><span>0</span><span>0</span></span></span><span class="matrix" role="img" aria-label="2 行 1 列，x₁；x₂"><span class="matrix-grid" style="--cols:1" aria-hidden="true"><span>x₁</span><span>x₂</span></span></span> = <span class="matrix" role="img" aria-label="2 行 1 列，0；0"><span class="matrix-grid" style="--cols:1" aria-hidden="true"><span>0</span><span>0</span></span></span></div><p class="solution-work">第一行：−2x₁ + x₂ = 0，所以 x₂ = 2x₁。<br>第二行：0·x₁ + 0·x₂ = 0，对任何 x₁、x₂ 都成立，不增加约束。</p>
+    </li>
+    <li>
+      <h4>为 λ = 3 选非零向量并验算</h4>
+      <p>取 x₁ = 1，按 x₂ = 2x₁ 算出 x₂ = 2，得到 v₂ = (1, 2)ᵀ。</p>
+      <div class="equation">Cv₂ = (1·1 + 1·2, 0·1 + 3·2)ᵀ = (3, 6)ᵀ = 3v₂</div>
+    </li>
+  </ol>
+  <p class="solution-note"><strong>容易丢分的地方</strong> 不能把两个变量都取成 0。任何非零倍数仍是同一特征值的特征向量，比如 (2, 4)ᵀ 也可作为 λ = 3 的答案。</p>
+</details><label class="check"><input type="checkbox" data-check="2"> 我能独立完成这题</label></div>
+<div class="exercise" id="q3"><div class="ex-top"><span class="ex-no">03</span><div><p class="eyebrow">按往年题型改编</p><h3>算复矩阵的最大行和</h3></div></div><div class="equation">D = <span class="matrix" role="img" aria-label="2 行 2 列，1、1 + 2i；2 − 2i、3"><span class="matrix-grid" style="--cols:2" aria-hidden="true"><span>1</span><span>1 + 2<i>i</i></span><span>2 − 2<i>i</i></span><span>3</span></span></span></div><p>求矩阵 ∞ 范数 <span class="math">‖D‖<sub>∞</sub></span>。</p><label class="work-label" for="work-3">我的演算</label><textarea id="work-3" rows="3" spellcheck="false" placeholder="可以在这里写，也可以用草稿纸。"></textarea><details><summary>看起手提示</summary><p>分别取四个元素的模。先在每一行内部相加，再在两行之间比较。</p></details><details class="solution">
+  <summary>看逐步答案与讲解</summary>
+  <p class="solution-route"><strong>解题路线</strong> 先逐项取模 → 分别求两行的和 → 比较并取最大。</p>
+  <ol class="steps solution-steps">
+    <li>
+      <h4>认出题目要按行算</h4>
+      <p>D 是矩阵，题目要的是 ∞ 范数，因此先算每一行的模之和。每行得到一个实数，最后才取最大。</p>
+      <div class="equation">‖D‖∞ = max(第一行模之和，第二行模之和)</div>
+    </li>
+    <li>
+      <h4>算第一行</h4>
+      <p>实数 1 的模是 1。对复数 1 + 2i，实部是 1、虚部是 2，用 |a + bi| = √(a² + b²)。</p>
+      <div class="equation">|1| + |1 + 2i| = 1 + √(1² + 2²) = 1 + √5</div>
+    </li>
+    <li>
+      <h4>算第二行</h4>
+      <p>2 − 2i 的虚部是 −2。虚部平方后是 4，所以这个元素的模是 √8 = 2√2。右边实数 3 的模是 3。</p>
+      <div class="equation">|2 − 2i| + |3| = √(2² + (−2)²) + 3 = 2√2 + 3</div>
+    </li>
+    <li>
+      <h4>比较两行并写答案</h4>
+      <p>第二行的实数项 3 大于第一行的 1，根号项 √8 也大于 √5，因此第二行的和更大。</p>
+      <div class="equation">‖D‖∞ = 3 + 2√2</div>
+    </li>
+  </ol>
+  <p class="solution-note"><strong>容易丢分的地方</strong> 要先对每个元素取模，再在同一行相加。若先把复数相加再取模，实部和虚部可能互相抵消。</p>
+</details><label class="check"><input type="checkbox" data-check="3"> 我能独立完成这题</label></div>
+<div class="exercise" id="q4"><div class="ex-top"><span class="ex-no">04</span><div><p class="eyebrow">按往年题型改编</p><h3>分开算三种范数</h3></div></div><div class="equation">A = <span class="matrix" role="img" aria-label="3 行 3 列，1、i、0；i、−1、2；0、i、1"><span class="matrix-grid" style="--cols:3" aria-hidden="true"><span>1</span><span><i>i</i></span><span>0</span><span><i>i</i></span><span>−1</span><span>2</span><span>0</span><span><i>i</i></span><span>1</span></span></span>， b = <span class="matrix" role="img" aria-label="3 行 1 列，1；2i；1"><span class="matrix-grid" style="--cols:1" aria-hidden="true"><span>1</span><span>2<i>i</i></span><span>1</span></span></span></div><p>求 <span class="math">‖b‖<sub>1</sub> + ‖Ab‖<sub>∞</sub> + ‖A‖<sub>1</sub></span>。</p><label class="work-label" for="work-4">我的演算</label><textarea id="work-4" rows="3" spellcheck="false" placeholder="可以在这里写，也可以用草稿纸。"></textarea><details><summary>看起手提示</summary><p>先算 b 的模之和，再算 Ab。最后一项按列求和。</p></details><details class="solution">
+  <summary>看逐步答案与讲解</summary>
+  <p class="solution-route"><strong>解题路线</strong> 依次算向量 b 的 1 范数、向量 Ab 的 ∞ 范数、矩阵 A 的 1 范数。</p>
+  <ol class="steps solution-steps">
+    <li>
+      <h4>先分清三个对象</h4>
+      <p>b 和 Ab 都是列向量，因此分别用「所有分量模之和」与「最大分量模」。A 是矩阵，它的 1 范数要比较各列模之和。</p>
+    </li>
+    <li>
+      <h4>算向量 b 的 1 范数</h4>
+      <p>b 的三个分量是 1、2i、1。纯虚数 2i 的实部是 0，所以 |2i| = √(0² + 2²) = 2。</p>
+      <div class="equation">‖b‖₁ = |1| + |2i| + |1| = 1 + 2 + 1 = 4</div>
+    </li>
+    <li>
+      <h4>逐行乘出 Ab</h4>
+      <p>每一行都和 b 的三个分量对齐，先相乘，再把三个乘积相加。出现 i·2i 时，先乘出 2i²，再用 i² = −1。</p>
+      <p class="solution-work">第一行：1·1 + i·2i + 0·1 = 1 + 2i² + 0 = 1 − 2 = −1。<br>第二行：i·1 + (−1)·2i + 2·1 = i − 2i + 2 = 2 − i。<br>第三行：0·1 + i·2i + 1·1 = 0 + 2i² + 1 = −2 + 1 = −1。</p><div class="equation">Ab = <span class="matrix" role="img" aria-label="3 行 1 列，−1；2 − i；−1"><span class="matrix-grid" style="--cols:1" aria-hidden="true"><span>−1</span><span>2 − i</span><span>−1</span></span></span></div>
+    </li>
+    <li>
+      <h4>算 Ab 的 ∞ 范数</h4>
+      <p>只比较三个分量的模。中间分量 2 − i 的实部是 2、虚部是 −1，所以它的模是 √5。两端的 −1 取模后都是 1。</p>
+      <div class="equation">‖Ab‖∞ = max(1, √(2² + (−1)²), 1) = √5</div>
+    </li>
+    <li>
+      <h4>算矩阵 A 的 1 范数</h4>
+      <p>这次按列看 A。每列都要先取模，再把三个模加起来。注意 |i| = 1、|−1| = 1。</p>
+      <p class="solution-work">第 1 列 (1, i, 0)ᵀ：1 + 1 + 0 = 2。<br>第 2 列 (i, −1, i)ᵀ：1 + 1 + 1 = 3。<br>第 3 列 (0, 2, 1)ᵀ：0 + 2 + 1 = 3。</p><div class="equation">‖A‖₁ = max(2, 3, 3) = 3</div>
+    </li>
+    <li>
+      <h4>把三个结果相加</h4>
+      <p>按题目原来的顺序写回去，检查三个量都已算过。</p>
+      <div class="equation">‖b‖₁ + ‖Ab‖∞ + ‖A‖₁ = 4 + √5 + 3 = 7 + √5</div>
+    </li>
+  </ol>
+  <p class="solution-note"><strong>容易丢分的地方</strong> 看到 ‖Ab‖∞ 时，先乘出 Ab。向量 b 的 1 范数和矩阵 A 的 1 范数虽然都写下标 1，计算对象不同。</p>
+</details><label class="check"><input type="checkbox" data-check="4"> 我能独立完成这题</label></div>
 <div class="callout finish"><strong>今晚的收工标准</strong><p>能闭卷列出第 2 题的方程，并独立算出第 3 题的两行和。第 4 题来不及可以留到明早。</p><details><summary>提前看一眼明天的若当标准形</summary><p>把例题矩阵的右下角 3 改成 2。λ = 2 在特征多项式里出现两次，但 <span class="math">A − 2I</span> 的核只有一维，所以只有一个线性无关的特征向量。这就是明天要区分的代数重数和几何重数。</p></details></div>
 </section>
 <section id="sources"><div class="section-num">04</div><h2>大学讲义和辅导</h2><p>遇到某一步卡住时，按下面的对应章节补看。例题和练习可以直接在本站完成。</p>
