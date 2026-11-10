@@ -19,8 +19,8 @@
 <div class="wrap reader"><aside class="sidebar"><nav aria-label="本文目录"><p class="eyebrow">本课目录</p><a href="#concepts">01 <span>先学知识点</span></a><a href="#worked">02 <span>跟做例题</span></a><a href="#practice">03 <span>独立练习</span></a><a href="#sources">04 <span>大学讲义</span></a></nav><div class="progress-card"><p class="eyebrow">独立完成</p><p class="progress-number"><span id="progress-count">0</span><small> / 4 题</small></p><progress id="progress" value="0" max="4" aria-label="独立完成的题数"></progress><p>能盖住答案重新做出来，再勾选。</p></div></aside>
 <div class="post-content">
 <section id="concepts"><div class="section-num">01</div><h2>先学三个知识点</h2>
-<h3>秩和核空间</h3><p>把矩阵 B 看作方程组的系数。做行变换时，可以交换两行、把某行乘以非零常数，或把某行的倍数加到另一行。这三种操作都能撤销，所以不会改变 <span class="math">Bx = 0</span> 的解。</p>
-<ol class="steps"><li><strong>先消元。</strong> 找到当前列中可用的非零数当主元，把它下面的数消成 0，再往右下处理。零行放到底部。</li><li><strong>再数主元。</strong> 阶梯形矩阵有几个主元，秩就是几。没有主元的列对应自由变量。若有 n 列和 r 个主元，核的维数就是 <span class="math">n − r</span>。</li><li><strong>最后回代。</strong> 把非零行写回方程。若有两个自由变量 s、t，分别取 <span class="math">(s,t) = (1,0)</span> 和 <span class="math">(0,1)</span>，代回去得到两个基向量。再用任意 s、t 写出通解。</li></ol>
+<h3>秩和核空间</h3><p>先想清楚题目在问什么。求核，就是问「哪些列向量 x 乘上 B 会变成零向量」；求核的维数，就是问「这些解可以由几个独立的方向组合出来」。把矩阵 B 看作方程组的系数。做行变换时，可以交换两行、把某行乘以非零常数，或把某行的倍数加到另一行。这三种操作都能撤销，所以不会改变 <span class="math">Bx = 0</span> 的解。</p>
+<ol class="steps"><li><strong>先消元。</strong> 找到当前列中可用的非零数当主元，把它下面的数消成 0，再往右下处理。零行放到底部。</li><li><strong>再数主元。</strong> 阶梯形矩阵有几个主元，秩就是几。没有主元的列对应自由变量。若有 n 列和 r 个主元，核的维数就是 <span class="math">n − r</span>。</li><li><strong>最后回代。</strong> 把非零行写回方程。若有两个自由变量 s、t，每次只让其中一个取 1，另一个取 0。具体就是分别取 <span class="math">(s,t) = (1,0)</span> 和 <span class="math">(0,1)</span>，代回去得到两个基向量。再用任意 s、t 写出通解。</li></ol>
 <div class="callout"><strong>基础解系和通解</strong><p>基础解系是一组向量。通解是把这些向量乘任意系数再相加，表示所有解。</p></div>
 <h3>特征值和特征向量</h3><p>若非零向量 v 满足 <span class="math">Av = λv</span>，λ 就是对应的特征值。把右边移到左边得 <span class="math">(A − λI)v = 0</span>。因为要有非零解，<span class="math">A − λI</span> 必须不可逆，所以先令 <span class="math">det(A − λI) = 0</span>，再对每个 λ 解方程组。</p>
 <p>I 是单位矩阵。构造 <span class="math">A − λI</span> 时，只把对角线上的元素减去 λ。三角矩阵可以直接从对角线读出特征值，求特征向量仍要解方程。</p>
@@ -29,19 +29,54 @@
 <div class="demo"><p class="eyebrow">切换看看</p><h4>同一个矩阵 按行与按列怎么算</h4>
 <div class="demo-inner"><table class="demo-matrix" aria-label="演示矩阵，第一行 1、负 4，第二行 2、0"><tbody><tr><td>1</td><td>−4</td></tr><tr><td>2</td><td>0</td></tr></tbody></table><div><div class="toggle" role="group" aria-label="范数演示"><button type="button" id="row-mode" aria-pressed="true">按行</button><button type="button" id="col-mode" aria-pressed="false">按列</button></div><p id="norm-result" aria-live="polite">两行分别是 1 + 4 = 5、2 + 0 = 2，所以 ∞ 范数是 5。</p></div></div></div>
 </section>
-<section id="worked"><div class="section-num">02</div><h2>跟做一道特征向量题</h2><p>求下面这个矩阵的特征值，以及每个特征值对应的一个非零特征向量。</p><div class="equation">A = <span class="matrix" role="img" aria-label="2 行 2 列，2、1；0、3"><span class="matrix-grid" style="--cols:2" aria-hidden="true"><span>2</span><span>1</span><span>0</span><span>3</span></span></span></div>
+<section id="worked"><div class="section-num">02</div><h2>从矩阵一步步求特征向量</h2>
+<p>我们要给下面这个矩阵的两个特征值，各找一个对应的非零特征向量。先把特征值算出来，再把 λ = 2 和 λ = 3 当成两道小题，分别解方程。</p>
+<div class="equation">A = <span class="matrix" role="img" aria-label="2 行 2 列，4、−2；1、1"><span class="matrix-grid" style="--cols:2" aria-hidden="true"><span>4</span><span>−2</span><span>1</span><span>1</span></span></span></div>
+<h3>先弄清我们在求什么</h3>
+<p>这里用 α 表示要找的列向量。题目要求 <span class="math">Aα = λα</span>，意思是「用 A 乘 α」的结果，和「把 α 乘一个数 λ」的结果一样。比如 λ = 2 时，最后要检查的是 <span class="math">Aα = 2α</span>。</p>
+<p>为了把未知量 α 放在同一边，引入单位矩阵 E。有的教材也把它写成 I。E 对角线上是 1，其他位置是 0，所以 <span class="math">Eα = α</span>。于是 <span class="math">λα = λEα</span>，从两边减去它，就得到我们要解的方程：</p>
+<div class="equation">Aα − λEα = (A − λE)α = 0</div>
+<h3>把特征值 2 和 3 算出来</h3>
+<p>如果 <span class="math">A − λE</span> 可逆，就能把它的逆矩阵乘到方程两边，得到 α = 0。但零向量不算特征向量，所以要找能让 <span class="math">A − λE</span> 不可逆的 λ，也就是让它的行列式等于 0 的 λ。</p>
+<div class="equation">A − λE = <span class="matrix" role="img" aria-label="2 行 2 列，4 − λ、−2；1、1 − λ"><span class="matrix-grid" style="--cols:2" aria-hidden="true"><span>4 − λ</span><span>−2</span><span>1</span><span>1 − λ</span></span></span></div>
+<p>二阶行列式用「左上乘右下，再减右上乘左下」。右上角是 −2，所以这里是减去一个负数。</p>
+<div class="equation">det(A − λE) = (4 − λ)(1 − λ) − (−2)·1</div>
+<div class="equation">= 4 − 4λ − λ + λ² + 2 = λ² − 5λ + 6 = (λ − 2)(λ − 3)</div>
+<p>让这个乘积等于 0，至少有一个因子为 0，因此 λ = 2 或 λ = 3。接下来固定其中一个 λ，未知量只剩向量里的两个坐标。</p>
+<h3>先求 λ = 2 对应的特征向量</h3>
 <ol class="steps worked-steps">
-<li><strong>写出 A − λI。</strong> 对角线上分别做 2 − λ 和 3 − λ，其他位置保持原数。<div class="equation">A − λI = <span class="matrix" role="img" aria-label="2 行 2 列，2、1；0、3"><span class="matrix-grid" style="--cols:2" aria-hidden="true"><span>2</span><span>1</span><span>0</span><span>3</span></span></span> − λ<span class="matrix" role="img" aria-label="2 行 2 列，1、0；0、1"><span class="matrix-grid" style="--cols:2" aria-hidden="true"><span>1</span><span>0</span><span>0</span><span>1</span></span></span> = <span class="matrix" role="img" aria-label="2 行 2 列，2 − λ、1；0、3 − λ"><span class="matrix-grid" style="--cols:2" aria-hidden="true"><span>2 − λ</span><span>1</span><span>0</span><span>3 − λ</span></span></span></div></li>
-<li><strong>算行列式并令它为零。</strong> 二阶行列式是主对角线乘积减去副对角线乘积，所以
-<div class="equation">det(A − λI) = (2 − λ)(3 − λ) − 1·0 = 0</div>
-两个因子里至少有一个为零，得 λ = 2 或 λ = 3。</li>
-<li><strong>代入 λ = 2，逐行写方程。</strong><div class="equation"><span class="matrix" role="img" aria-label="2 行 2 列，0、1；0、1"><span class="matrix-grid" style="--cols:2" aria-hidden="true"><span>0</span><span>1</span><span>0</span><span>1</span></span></span><span class="matrix" role="img" aria-label="2 行 1 列，x₁；x₂"><span class="matrix-grid" style="--cols:1" aria-hidden="true"><span>x₁</span><span>x₂</span></span></span> = <span class="matrix" role="img" aria-label="2 行 1 列，0；0"><span class="matrix-grid" style="--cols:1" aria-hidden="true"><span>0</span><span>0</span></span></span></div>
-第一行给 <span class="math">0·x₁ + x₂ = 0</span>，第二行也是 <span class="math">x₂ = 0</span>。因此 x₂ 必须为 0，x₁ 可自由取值。为了得到非零向量，取 x₁ = 1，得 <span class="math">v₁ = (1, 0)ᵀ</span>。
-<p class="verify">验算：Av₁ = (2·1 + 1·0, 0·1 + 3·0)ᵀ = (2, 0)ᵀ = 2v₁。</p></li>
-<li><strong>代入 λ = 3，逐行写方程。</strong><div class="equation"><span class="matrix" role="img" aria-label="2 行 2 列，−1、1；0、0"><span class="matrix-grid" style="--cols:2" aria-hidden="true"><span>−1</span><span>1</span><span>0</span><span>0</span></span></span><span class="matrix" role="img" aria-label="2 行 1 列，x₁；x₂"><span class="matrix-grid" style="--cols:1" aria-hidden="true"><span>x₁</span><span>x₂</span></span></span> = <span class="matrix" role="img" aria-label="2 行 1 列，0；0"><span class="matrix-grid" style="--cols:1" aria-hidden="true"><span>0</span><span>0</span></span></span></div>
-第一行给 <span class="math">−x₁ + x₂ = 0</span>，第二行给 <span class="math">0 = 0</span>，没有新增限制。因此 x₂ = x₁。取 x₁ = 1，就有 x₂ = 1，得 <span class="math">v₂ = (1, 1)ᵀ</span>。
-<p class="verify">验算：Av₂ = (2·1 + 1·1, 0·1 + 3·1)ᵀ = (3, 3)ᵀ = 3v₂。</p></li></ol>
-<div class="callout"><strong>现在盖住例题</strong><p>重新写一遍 λ = 3 时的矩阵和两行方程。然后去做第 2 题，把这个流程用到另一组数字上。</p></div>
+  <li><strong>把 2 代入，算出 A − 2E。</strong> <p>先把 E 的每个位置乘 2，得到 2E。然后两个矩阵对应位置相减。因为 2E 的非对角位置都是 0，A 的这两个位置照抄。</p>
+  <div class="equation">E = <span class="matrix" role="img" aria-label="2 行 2 列，1、0；0、1"><span class="matrix-grid" style="--cols:2" aria-hidden="true"><span>1</span><span>0</span><span>0</span><span>1</span></span></span>， 2E = <span class="matrix" role="img" aria-label="2 行 2 列，2、0；0、2"><span class="matrix-grid" style="--cols:2" aria-hidden="true"><span>2</span><span>0</span><span>0</span><span>2</span></span></span></div>
+  <div class="equation">A − 2E = <span class="matrix" role="img" aria-label="2 行 2 列，4 − 2、−2 − 0；1 − 0、1 − 2"><span class="matrix-grid" style="--cols:2" aria-hidden="true"><span>4 − 2</span><span>−2 − 0</span><span>1 − 0</span><span>1 − 2</span></span></span> = <span class="matrix" role="img" aria-label="2 行 2 列，2、−2；1、−1"><span class="matrix-grid" style="--cols:2" aria-hidden="true"><span>2</span><span>−2</span><span>1</span><span>−1</span></span></span></div></li>
+  <li><strong>写成两条关于 x₁、x₂ 的方程。</strong> <p>设 α 的上、下两个坐标分别是 x₁、x₂。矩阵的第一行乘 α 得到第一条方程，第二行乘 α 得到第二条方程。右边的两个 0 表示这两条式子都等于 0。</p>
+  <div class="equation"><span class="matrix" role="img" aria-label="2 行 2 列，2、−2；1、−1"><span class="matrix-grid" style="--cols:2" aria-hidden="true"><span>2</span><span>−2</span><span>1</span><span>−1</span></span></span><span class="matrix" role="img" aria-label="2 行 1 列，x₁；x₂"><span class="matrix-grid" style="--cols:1" aria-hidden="true"><span>x₁</span><span>x₂</span></span></span> = <span class="matrix" role="img" aria-label="2 行 1 列，0；0"><span class="matrix-grid" style="--cols:1" aria-hidden="true"><span>0</span><span>0</span></span></span></div>
+  <p class="solution-work">第一行：2·x₁ + (−2)·x₂ = 0。<br>第二行：1·x₁ + (−1)·x₂ = 0。</p></li>
+  <li><strong>用行变换消掉重复的方程。</strong> <p>第一行的两个系数正好都是第二行的两倍。先把第一行除以 2，这相当于把整条方程两边同时除以 2，解不会变。此时两行相同，再用第二行减第一行，就得到一条零行。</p>
+  <div class="equation"><span class="matrix" role="img" aria-label="2 行 2 列，2、−2；1、−1"><span class="matrix-grid" style="--cols:2" aria-hidden="true"><span>2</span><span>−2</span><span>1</span><span>−1</span></span></span> → <span class="matrix" role="img" aria-label="2 行 2 列，1、−1；1、−1"><span class="matrix-grid" style="--cols:2" aria-hidden="true"><span>1</span><span>−1</span><span>1</span><span>−1</span></span></span> → <span class="matrix" role="img" aria-label="2 行 2 列，1、−1；0、0"><span class="matrix-grid" style="--cols:2" aria-hidden="true"><span>1</span><span>−1</span><span>0</span><span>0</span></span></span></div>
+  <p>第一条保留下来的方程是 x₁ − x₂ = 0。第二行是 0 = 0，对任何 x₁、x₂ 都成立，所以没有多加一条限制。</p></li>
+  <li><strong>弄清谁可以自己取，再写出所有解。</strong> <p>第一列有主元，所以 x₁ 由方程决定；第二列没有主元，所以 x₂ 可以任取。把 x₂ 记作 t，则 x₁ = t。比如你选 x₂ = 5，方程就要求 x₁ 也是 5。</p>
+  <div class="equation"><span class="matrix" role="img" aria-label="2 行 1 列，x₁；x₂"><span class="matrix-grid" style="--cols:1" aria-hidden="true"><span>x₁</span><span>x₂</span></span></span> = <span class="matrix" role="img" aria-label="2 行 1 列，t；t"><span class="matrix-grid" style="--cols:1" aria-hidden="true"><span>t</span><span>t</span></span></span> = t<span class="matrix" role="img" aria-label="2 行 1 列，1；1"><span class="matrix-grid" style="--cols:1" aria-hidden="true"><span>1</span><span>1</span></span></span></div>
+  <p>t = 0 时得到零向量；它满足方程，但不是特征向量。为了给出最简单的一个非零解，取 t = 1，得到 α₁ = (1, 1)ᵀ。括号后面的 T 表示转置，提醒我们这两个数应竖着写。</p></li>
+  <li><strong>乘回原来的 A 验算。</strong> <p>用原矩阵的两行分别乘 α₁。第一行得到 4·1 + (−2)·1 = 2，第二行得到 1·1 + 1·1 = 2。</p>
+  <div class="equation">Aα₁ = <span class="matrix" role="img" aria-label="2 行 1 列，2；2"><span class="matrix-grid" style="--cols:1" aria-hidden="true"><span>2</span><span>2</span></span></span> = 2<span class="matrix" role="img" aria-label="2 行 1 列，1；1"><span class="matrix-grid" style="--cols:1" aria-hidden="true"><span>1</span><span>1</span></span></span> = 2α₁</div>
+  <p>这就确认了 (1, 1)ᵀ 对应的是 λ = 2。</p></li>
+</ol>
+<h3>再求 λ = 3 对应的特征向量</h3>
+<p>现在回到原矩阵 A，重新减 3E。刚才的行化简是为 λ = 2 的方程服务的，换成 λ = 3 后，要从新的系数矩阵开始。</p>
+<ol class="steps worked-steps">
+  <li><strong>算 A − 3E 并写出方程。</strong> <p>对角线上分别做 4 − 3 和 1 − 3，其他位置照抄。</p>
+  <div class="equation">A − 3E = <span class="matrix" role="img" aria-label="2 行 2 列，4 − 3、−2 − 0；1 − 0、1 − 3"><span class="matrix-grid" style="--cols:2" aria-hidden="true"><span>4 − 3</span><span>−2 − 0</span><span>1 − 0</span><span>1 − 3</span></span></span> = <span class="matrix" role="img" aria-label="2 行 2 列，1、−2；1、−2"><span class="matrix-grid" style="--cols:2" aria-hidden="true"><span>1</span><span>−2</span><span>1</span><span>−2</span></span></span></div>
+  <div class="equation"><span class="matrix" role="img" aria-label="2 行 2 列，1、−2；1、−2"><span class="matrix-grid" style="--cols:2" aria-hidden="true"><span>1</span><span>−2</span><span>1</span><span>−2</span></span></span><span class="matrix" role="img" aria-label="2 行 1 列，x₁；x₂"><span class="matrix-grid" style="--cols:1" aria-hidden="true"><span>x₁</span><span>x₂</span></span></span> = <span class="matrix" role="img" aria-label="2 行 1 列，0；0"><span class="matrix-grid" style="--cols:1" aria-hidden="true"><span>0</span><span>0</span></span></span></div>
+  <p class="solution-work">第一行：x₁ − 2x₂ = 0。<br>第二行：x₁ − 2x₂ = 0。这是同一条限制。</p></li>
+  <li><strong>去掉重复的行，选自由变量。</strong> <p>第二行减第一行，得到下面的矩阵。第一列有主元，所以解出 x₁ = 2x₂。第二列没有主元，取 x₂ = t，便得到 x₁ = 2t。</p>
+  <div class="equation"><span class="matrix" role="img" aria-label="2 行 2 列，1、−2；1、−2"><span class="matrix-grid" style="--cols:2" aria-hidden="true"><span>1</span><span>−2</span><span>1</span><span>−2</span></span></span> → <span class="matrix" role="img" aria-label="2 行 2 列，1、−2；0、0"><span class="matrix-grid" style="--cols:2" aria-hidden="true"><span>1</span><span>−2</span><span>0</span><span>0</span></span></span></div>
+  <div class="equation"><span class="matrix" role="img" aria-label="2 行 1 列，x₁；x₂"><span class="matrix-grid" style="--cols:1" aria-hidden="true"><span>x₁</span><span>x₂</span></span></span> = <span class="matrix" role="img" aria-label="2 行 1 列，2t；t"><span class="matrix-grid" style="--cols:1" aria-hidden="true"><span>2t</span><span>t</span></span></span> = t<span class="matrix" role="img" aria-label="2 行 1 列，2；1"><span class="matrix-grid" style="--cols:1" aria-hidden="true"><span>2</span><span>1</span></span></span></div>
+  <p>取 t = 1，得到 α₂ = (2, 1)ᵀ。这里 x₂ 取 1 后，x₁ 得按方程算成 2，不能也顺手写成 1。</p></li>
+  <li><strong>用原矩阵检查它是否放大了 3 倍。</strong> <p>第一行是 4·2 + (−2)·1 = 6，第二行是 1·2 + 1·1 = 3。</p>
+  <div class="equation">Aα₂ = <span class="matrix" role="img" aria-label="2 行 1 列，6；3"><span class="matrix-grid" style="--cols:1" aria-hidden="true"><span>6</span><span>3</span></span></span> = 3<span class="matrix" role="img" aria-label="2 行 1 列，2；1"><span class="matrix-grid" style="--cols:1" aria-hidden="true"><span>2</span><span>1</span></span></span> = 3α₂</div></li>
+</ol>
+<div class="callout"><strong>题目到底要写什么</strong><p>如果题目要「各写一个特征向量」，就写 λ = 2 对应 (1, 1)ᵀ，λ = 3 对应 (2, 1)ᵀ。如果题目要「全部特征向量」，每个答案都要乘上任意非零数 t。如果题目要「特征空间的一组基」，分别写出只含这一个向量的集合。</p></div>
+<p>接着做<a href="#q2">第 2 题</a>。每解出一行，试着说出它限制了哪个未知量。等你能说明为什么另一个未知量可以自己取，这一步就会了。</p>
 </section>
 <section id="practice"><div class="section-num">03</div><h2>独立练四道题</h2><p>先在空白处或草稿纸上写。卡住时只展开提示。第 3、4 题是按往年题型改编的练习。</p><noscript><p>提示和答案仍可展开。启用 JavaScript 后可以保留勾选和草稿。</p></noscript>
 <div class="exercise" id="q1"><div class="ex-top"><span class="ex-no">01</span><div><p class="eyebrow">基础题</p><h3>行化简求秩和核</h3></div></div><div class="equation">B = <span class="matrix" role="img" aria-label="3 行 3 列，1、2、1；2、4、2；0、1、1"><span class="matrix-grid" style="--cols:3" aria-hidden="true"><span>1</span><span>2</span><span>1</span><span>2</span><span>4</span><span>2</span><span>0</span><span>1</span><span>1</span></span></span></div><p>求 B 的秩、核的维数，以及核的一组基。</p><label class="work-label" for="work-1">我的演算</label><textarea id="work-1" rows="3" spellcheck="false" placeholder="可以在这里写，也可以用草稿纸。"></textarea><details><summary>看起手提示</summary><p>先把第二行减去第一行的两倍，再把零行移到底部。</p></details><details class="solution">
@@ -60,7 +95,7 @@
     </li>
     <li>
       <h4>数主元和自由变量</h4>
-      <p>第一、二列各有一个主元，所以秩是 2。第三列没有主元，对应的 x₃ 是自由变量。三个未知量里有两个主元变量，剩下一个自由变量，所以核的维数是 1。</p>
+      <p>化简后的第一行从第 1 列的 1 开始，第二行从第 2 列的 1 开始，这两个 1 就是主元，所以秩是 2。看方程时，你可以先自己决定 x₃，再由第二行算 x₂，最后由第一行算 x₁。三个坐标中只有 x₃ 能自己选，所以核的维数是 1。</p>
       <div class="equation">rank(B) = 2，dim ker(B) = 3 − 2 = 1</div>
     </li>
     <li>
@@ -97,7 +132,7 @@
     </li>
     <li>
       <h4>为 λ = 1 选非零向量并验算</h4>
-      <p>方程没有限制 x₁。取 x₁ = 1、x₂ = 0，得到 v₁ = (1, 0)ᵀ。乘回原矩阵，比较它与 1·v₁ 是否相同。</p>
+      <p>两行都只出现 x₂，所以它们只要求 x₂ = 0，x₁ 没有被限制。令 x₁ = t，所有解就是 (t, 0)ᵀ = t(1, 0)ᵀ。取 t = 1，得到 v₁ = (1, 0)ᵀ。接下来乘的是原矩阵 C，因为要检查 Cv₁ 是否等于 1·v₁。</p>
       <div class="equation">Cv₁ = (1·1 + 1·0, 0·1 + 3·0)ᵀ = (1, 0)ᵀ = 1·v₁</div>
     </li>
     <li>
@@ -107,7 +142,7 @@
     </li>
     <li>
       <h4>为 λ = 3 选非零向量并验算</h4>
-      <p>取 x₁ = 1，按 x₂ = 2x₁ 算出 x₂ = 2，得到 v₂ = (1, 2)ᵀ。</p>
+      <p>这次第一行给出了两个未知量的关系，但没有把它们固定成某两个数。可以令 x₁ = t，然后 x₂ 必须是 2t。所有解就是 (t, 2t)ᵀ = t(1, 2)ᵀ。为了拿到一个非零向量，取 t = 1，得到 v₂ = (1, 2)ᵀ。</p>
       <div class="equation">Cv₂ = (1·1 + 1·2, 0·1 + 3·2)ᵀ = (3, 6)ᵀ = 3v₂</div>
     </li>
   </ol>
@@ -138,7 +173,7 @@
       <div class="equation">‖D‖∞ = 3 + 2√2</div>
     </li>
   </ol>
-  <p class="solution-note"><strong>容易丢分的地方</strong> 要先对每个元素取模，再在同一行相加。若先把复数相加再取模，实部和虚部可能互相抵消。</p>
+  <p class="solution-note"><strong>容易丢分的地方</strong> 要先对每个元素取模，再在同一行相加。例如，同一行里若有 1 和 −1，正确的和是 |1| + |−1| = 2；如果先相加再取模，就会错算成 |1 + (−1)| = 0。</p>
 </details><label class="check"><input type="checkbox" data-check="3"> 我能独立完成这题</label></div>
 <div class="exercise" id="q4"><div class="ex-top"><span class="ex-no">04</span><div><p class="eyebrow">按往年题型改编</p><h3>分开算三种范数</h3></div></div><div class="equation">A = <span class="matrix" role="img" aria-label="3 行 3 列，1、i、0；i、−1、2；0、i、1"><span class="matrix-grid" style="--cols:3" aria-hidden="true"><span>1</span><span><i>i</i></span><span>0</span><span><i>i</i></span><span>−1</span><span>2</span><span>0</span><span><i>i</i></span><span>1</span></span></span>， b = <span class="matrix" role="img" aria-label="3 行 1 列，1；2i；1"><span class="matrix-grid" style="--cols:1" aria-hidden="true"><span>1</span><span>2<i>i</i></span><span>1</span></span></span></div><p>求 <span class="math">‖b‖<sub>1</sub> + ‖Ab‖<sub>∞</sub> + ‖A‖<sub>1</sub></span>。</p><label class="work-label" for="work-4">我的演算</label><textarea id="work-4" rows="3" spellcheck="false" placeholder="可以在这里写，也可以用草稿纸。"></textarea><details><summary>看起手提示</summary><p>先算 b 的模之和，再算 Ab。最后一项按列求和。</p></details><details class="solution">
   <summary>看逐步答案与讲解</summary>
@@ -155,7 +190,7 @@
     </li>
     <li>
       <h4>逐行乘出 Ab</h4>
-      <p>每一行都和 b 的三个分量对齐，先相乘，再把三个乘积相加。出现 i·2i 时，先乘出 2i²，再用 i² = −1。</p>
+      <p>A 有三行三列，b 有三行一列，所以 Ab 有三行一列。要找 Ab 的第几个分量，就拿 A 的第几行和 b 的三个分量对齐，先相乘，再把三个乘积相加。出现 i·2i 时，先乘出 2i²，再用 i² = −1。</p>
       <p class="solution-work">第一行：1·1 + i·2i + 0·1 = 1 + 2i² + 0 = 1 − 2 = −1。<br>第二行：i·1 + (−1)·2i + 2·1 = i − 2i + 2 = 2 − i。<br>第三行：0·1 + i·2i + 1·1 = 0 + 2i² + 1 = −2 + 1 = −1。</p><div class="equation">Ab = <span class="matrix" role="img" aria-label="3 行 1 列，−1；2 − i；−1"><span class="matrix-grid" style="--cols:1" aria-hidden="true"><span>−1</span><span>2 − i</span><span>−1</span></span></span></div>
     </li>
     <li>
@@ -176,7 +211,7 @@
   </ol>
   <p class="solution-note"><strong>容易丢分的地方</strong> 看到 ‖Ab‖∞ 时，先乘出 Ab。向量 b 的 1 范数和矩阵 A 的 1 范数虽然都写下标 1，计算对象不同。</p>
 </details><label class="check"><input type="checkbox" data-check="4"> 我能独立完成这题</label></div>
-<div class="callout finish"><strong>今晚的收工标准</strong><p>能闭卷列出第 2 题的方程，并独立算出第 3 题的两行和。第 4 题来不及可以留到明早。</p><details><summary>提前看一眼明天的若当标准形</summary><p>把例题矩阵的右下角 3 改成 2。λ = 2 在特征多项式里出现两次，但 <span class="math">A − 2I</span> 的核只有一维，所以只有一个线性无关的特征向量。这就是明天要区分的代数重数和几何重数。</p></details></div>
+<div class="callout finish"><strong>今晚的收工标准</strong><p>能闭卷列出第 2 题的方程，并独立算出第 3 题的两行和。第 4 题来不及可以留到明早。</p><details><summary>提前看一眼明天的若当标准形</summary><p>另取矩阵 J，第一行是 (2, 1)，第二行是 (0, 2)。它的特征值 λ = 2 在特征多项式里出现两次，但 <span class="math">J − 2I</span> 的核只有一维，所以最多只能找到一个线性无关的特征向量。这就是明天要区分的代数重数和几何重数。</p></details></div>
 </section>
 <section id="sources"><div class="section-num">04</div><h2>大学讲义和辅导</h2><p>遇到某一步卡住时，按下面的对应章节补看。例题和练习可以直接在本站完成。</p>
 <ul class="source-list">
