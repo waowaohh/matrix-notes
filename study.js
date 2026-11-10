@@ -1,6 +1,6 @@
 "use strict";
 
-const lessonKey = "matrix-notes-night-1:";
+const lessonKey = "matrix-notes-" + (document.body.dataset.lesson ?? "night-1") + ":";
 const getSaved = (key) => {
   try { return localStorage.getItem(lessonKey + key); } catch { return null; }
 };
@@ -40,5 +40,5 @@ function showNorm(byColumn) {
     ? "两列分别是 1 + 2 = 3、4 + 0 = 4，所以 1 范数是 4。"
     : "两行分别是 1 + 4 = 5、2 + 0 = 2，所以 ∞ 范数是 5。";
 }
-rowMode.addEventListener("click", () => showNorm(false));
-colMode.addEventListener("click", () => showNorm(true));
+rowMode?.addEventListener("click", () => showNorm(false));
+colMode?.addEventListener("click", () => showNorm(true));

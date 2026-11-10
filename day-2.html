@@ -1,0 +1,148 @@
+<!doctype html>
+<!-- Static adaptation of the Minima default and post layouts. See LICENSE.minima. -->
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>矩阵论第二天｜若当标准形</title>
+<meta name="description" content="从特征向量接到若当标准形。逐步学会读 Jordan 块和 Smith 形、求最小多项式、构造变换矩阵。">
+<link rel="stylesheet" href="./style.css"><script src="./study.js" defer></script></head>
+<body id="top" data-lesson="night-2"><a class="skip" href="#lesson">跳到正文</a>
+<header class="site-header"><div class="wrap header-inner"><a class="brand" href="./index.html"><span class="brand-mark" aria-hidden="true">∑</span>矩阵论笔记</a><nav aria-label="主要导航"><a href="./index.html">第一天</a><a href="#worked">例题</a><a href="#practice">练习</a></nav></div></header>
+<main class="page-content" id="lesson"><article class="post">
+<header class="hero"><div class="wrap hero-inner"><div>
+<p class="eyebrow hero-kicker"><span></span> 矩阵论入门 <b>02 / 第二天</b></p>
+<h1>矩阵论第二天</h1><p class="hero-sub">从特征向量到若当标准形</p>
+<p class="hero-lede">昨天我们解方程找特征向量。今天接着看：特征向量凑不齐时，缺的那一列怎么补？补好后，怎样写出若当标准形和最小多项式？</p>
+<div class="hero-actions"><a class="button" href="#concepts">从知识点开始 <span aria-hidden="true">↓</span></a><a class="hero-link" href="#practice">直接去做题 →</a></div>
+<div class="hero-meta"><span>约 75–90 分钟</span><span>3 类往年题型</span><span>4 道独立练习</span></div>
+</div><div class="hero-art" aria-hidden="true">
+<svg viewBox="0 0 360 230" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse"><path d="M24 0H0V24" fill="none" stroke="#7a7885" stroke-width=".6" opacity=".48"/></pattern></defs><rect width="360" height="230" fill="url(#grid)"/><g stroke="#5e5360" fill="#2c2935"><rect x="24" y="93" width="66" height="60" rx="9"/><rect x="148" y="93" width="65" height="60" rx="9"/><rect x="272" y="93" width="65" height="60" rx="9"/></g><g stroke="#ffae7e" stroke-width="2" fill="none" stroke-linejoin="round" stroke-linecap="round"><path d="M97 123h44m-10-7 10 7-10 7M220 123h45m-10-7 10 7-10 7"/></g><g text-anchor="middle" fill="#f8ece0" font-family="Georgia" font-size="29"><text x="57" y="132">w</text><text x="180" y="132">v</text><text x="304" y="132">0</text></g><g text-anchor="middle" fill="#ffae7e" font-family="Georgia" font-size="17"><text x="119" y="106">A−λI</text><text x="242" y="106">A−λI</text></g><text x="180" y="190" text-anchor="middle" fill="#e4d5d0" font-family="system-ui, Microsoft YaHei, sans-serif" font-size="14">每乘一次，往链头走一格</text></svg>
+<p>写进变换矩阵时，把特征向量 v 放前面，w 紧跟在后面。</p></div></div></header>
+<div class="wrap reader"><aside class="sidebar"><nav aria-label="本文目录"><p class="eyebrow">本课目录</p><a href="#concepts">01 <span>知识点与小例子</span></a><a href="#worked">02 <span>跟做变换矩阵</span></a><a href="#practice">03 <span>独立练习</span></a><a href="#sources">04 <span>讲义与辅导</span></a></nav><div class="progress-card"><p class="eyebrow">独立完成</p><p class="progress-number"><span id="progress-count">0</span><small> / 4 题</small></p><progress id="progress" value="0" max="4" aria-label="独立完成的题数"></progress><p>能盖住答案重新做出来，再勾选。</p></div></aside>
+<div class="post-content">
+<section id="concepts"><div class="section-num">01</div><h2>先弄懂为什么需要若当块</h2>
+<p>开做前回忆一句：求 λ 对应的普通特征向量，就是解 <span class="math">(A − λI)x = 0</span>，再从中选非零解。I 是单位矩阵，λ 是你已经求出的一个特征值。如果忘了怎么逐行列方程，可以先回看<a href="./index.html#worked">第一天的例题</a>。</p>
+<h3>同一个特征值出现两次，能找到几个独立方向</h3>
+<p>看下面两个二阶矩阵。它们都是三角矩阵，主对角线都是 2、2。所以各自的特征多项式都是 (t − 2)²。这里 t 是多项式的变量，λ = 2 是我们解出来的一个具体数。</p>
+<div class="equation">D = <span class="matrix" role="img" aria-label="2 行 2 列，2、0；0、2"><span class="matrix-grid" style="--cols:2" aria-hidden="true"><span>2</span><span>0</span><span>0</span><span>2</span></span></span>， H = <span class="matrix" role="img" aria-label="2 行 2 列，2、1；0、2"><span class="matrix-grid" style="--cols:2" aria-hidden="true"><span>2</span><span>1</span><span>0</span><span>2</span></span></span></div>
+<ol class="steps worked-steps"><li><h4>先看 D 的两个坐标分别受什么限制</h4><p>算 D − 2I 时，对角线上的 2 都减成 0，其他位置本来就是 0。于是方程的两行都是 0 = 0，x₁、x₂ 可以各自取值。取 (1, 0)ᵀ 和 (0, 1)ᵀ 就得到两个独立的特征向量。</p><div class="equation">D − 2I = <span class="matrix" role="img" aria-label="2 行 2 列，0、0；0、0"><span class="matrix-grid" style="--cols:2" aria-hidden="true"><span>0</span><span>0</span><span>0</span><span>0</span></span></span></div></li>
+<li><h4>再看 H 的右上角 1 造成了什么</h4><p>算 H − 2I 时，右上角的 1 照抄。第一行乘 (x₁, x₂)ᵀ 得 0·x₁ + 1·x₂，必须等于 0，所以 x₂ = 0。第二行给 0 = 0。只有 x₁ 自由，所有解都是 (x₁, 0)ᵀ，非零解全在同一个方向上。</p><div class="equation">H − 2I = <span class="matrix" role="img" aria-label="2 行 2 列，0、1；0、0"><span class="matrix-grid" style="--cols:2" aria-hidden="true"><span>0</span><span>1</span><span>0</span><span>0</span></span></span>， (H − 2I)x = <span class="matrix" role="img" aria-label="2 行 1 列，x₂；0"><span class="matrix-grid" style="--cols:1" aria-hidden="true"><span>x₂</span><span>0</span></span></span></div></li></ol>
+<p>这就是两个「重数」的区别。<strong>代数重数</strong>数的是特征多项式里 (t − λ) 的指数。<strong>几何重数</strong>数的是 <span class="math">ker(A − λI)</span> 的维数，也就是独立的普通特征向量最多有几个。D 对应的是 2 和 2，H 对应的是 2 和 1。</p>
+<div class="callout"><strong>用普通特征向量能不能排满一组基</strong><p>对 D 可以，两个方向都能当基，所以它是两个一阶若当块。对 H，λ = 2 虽然在对角线上出现两次，普通特征向量却只能给一个方向，因此需要一个二阶若当块来记录缺的那一列。这里的块写成 J₂(2)，下标 2 是块大小，括号里的 2 是特征值。</p></div>
+<h3>若当块右上角的 1 是怎么来的</h3>
+<p>令 N = A − λI。先找普通特征向量 v，满足 Nv = 0。要补第二列，就找一个 w，满足 Nw = v。w 本身不是普通特征向量，因为 Nw 不为零；但再乘一次 N 就得到 N²w = Nv = 0，所以它是二阶广义特征向量。v、w 依次排成一条链。</p>
+<div class="equation">Nv = 0， Nw = v</div>
+<p>把 N = A − λI 代回去。第一条变成 Av = λv。第二条是 Aw − λw = v，移项得到 Aw = v + λw。</p>
+<div class="equation">Av = λv， Aw = v + λw</div>
+<p>如果用 v、w 做新基，Av 里 v 的系数是 λ、w 的系数是 0，所以新矩阵第一列是 (λ, 0)ᵀ。Aw 里 v 的系数是 1、w 的系数是 λ，所以第二列是 (1, λ)ᵀ。右上角的 1 就记录了 Aw 中多出来的那个 v。</p>
+<div class="equation">J₂(λ) = <span class="matrix" role="img" aria-label="2 行 2 列，λ、1；0、λ"><span class="matrix-grid" style="--cols:2" aria-hidden="true"><span>λ</span><span>1</span><span>0</span><span>λ</span></span></span></div>
+<p>用刚才的 H 试一下。取 v = (1, 0)ᵀ、w = (0, 1)ᵀ。因为 (H − 2I)x = (x₂, 0)ᵀ，代入 v 得 (0, 0)ᵀ，代入 w 得 (1, 0)ᵀ，恰好是 v。</p>
+<p>考试写 <span class="math">T⁻¹AT = J</span> 时，T 的列就是按这个顺序排的新基。知道 T 可逆后，验算 <span class="math">AT = TJ</span> 就够了，通常比手算 T⁻¹ 更省事。</p>
+<h3>已给若当形，怎么读最小多项式</h3>
+<p>最小多项式是使 m(A) = 0 的最低次数首一多项式。「首一」指最高次项系数是 1；「代入 A」时，t² 写成 A²，常数 c 写成 cI。例如 m(t) = (t − 2)²，对应 m(A) = (A − 2I)²。相似变换只换基，m(A) = 0 与 m(J) = 0 等价，所以有了 J，就可以一块一块看。</p>
+<p>拿二阶块 H = J₂(2) 试。减去 2I 后，N 的右上角仍是 1，所以一次乘方没有归零。再乘一次，N² 的四项都是 0。所以这一块需要因子 (t − 2)²，指数 1 不够。</p>
+<div class="equation">N = <span class="matrix" role="img" aria-label="2 行 2 列，0、1；0、0"><span class="matrix-grid" style="--cols:2" aria-hidden="true"><span>0</span><span>1</span><span>0</span><span>0</span></span></span>， N² = <span class="matrix" role="img" aria-label="2 行 2 列，0、0；0、0"><span class="matrix-grid" style="--cols:2" aria-hidden="true"><span>0</span><span>0</span><span>0</span><span>0</span></span></span></div>
+<p>一阶块 J₁(2) = [2] 减去 [2] 就归零，只需要 (t − 2) 一次。如果同一个 λ 有多个块，一个高次因子可以同时覆盖较小的块，所以对这个 λ 只取<strong>最大块的大小</strong>当指数。换成另一个特征值，就另写一个因子。</p>
+<details><summary>为什么其他因子不能替代这一项</summary><p>比如在 λ = 2 的若当块上，t − 4 代进去是 J − 4I。它的对角线都是 −2，所以它可逆。乘上这个矩阵不会把原来非零的矩阵变成零。要让 λ = 2 的块归零，仍要靠足够多次的 J − 2I。</p></details>
+<div class="table-wrap"><table><thead><tr><th scope="col">固定一个 λ</th><th scope="col">数什么</th></tr></thead><tbody>
+<tr><th scope="row">代数重数</th><td>把 λ 的所有块大小相加</td></tr>
+<tr><th scope="row">几何重数</th><td>数 λ 的块有几个，每个块给一个独立特征向量</td></tr>
+<tr><th scope="row">最小多项式指数</th><td>只看 λ 的最大块有多大</td></tr>
+</tbody></table></div>
+<p>例如 J = diag(J₂(5), J₁(5), J₁(−1))，diag 表示把这些块沿对角线排开。λ = 5 的两个块大小是 2 和 1，所以代数重数是 3，几何重数是 2，最小多项式里只取 2 次。λ = −1 只有一个 1 阶块，因此写 (t + 1) 一次。</p>
+<div class="equation">χ(t) = (t − 5)³(t + 1)， m(t) = (t − 5)²(t + 1)</div>
+<h3>已给 Smith 形，怎么把它翻译成若当块</h3>
+<p>有些题会把 <span class="math">tI − A</span> 的 Smith 标准形直接给你。它是一个对角矩阵，对角线上的多项式叫<strong>不变因子</strong>，按前一项整除后一项来排。今天练的是读这个已给的对角线。</p>
+<p>把每个非恒定的不变因子拆成不同的一次因子的幂。每出现一个 <span class="math">(t − λ)ᵏ</span>，就记一个 k 阶块 Jₖ(λ)。这些拆出来的幂叫<strong>初等因子</strong>。对角线上的 1 是常数，没有根，也就没有对应的若当块。</p>
+<div class="equation">S(t) = diag(1, t − 5, (t − 5)²)</div>
+<ol class="steps worked-steps"><li><h4>第一个 1 跳过</h4><p>1 没有零点，不能从它读出特征值。它不是 J₁(1)。</p></li>
+<li><h4>把剩下两项分开读</h4><p>第二项 t − 5 是 (t − 5) 的一次幂，对应 J₁(5)。第三项 (t − 5)² 对应 J₂(5)。它们虽然都是 λ = 5，仍然是两个块；不能把指数加起来合成一个三阶块。</p></li>
+<li><h4>核对维数并写最小多项式</h4><p>块的大小相加是 1 + 2 = 3，与原来的三阶矩阵一致。λ = 5 的最大块是 2，所以 m(t) = (t − 5)²。也可以直接核对最后一个不变因子，它就是最小多项式。</p><div class="equation">J = diag(J₂(5), J₁(5)) = <span class="matrix" role="img" aria-label="3 行 3 列，5、1、0；0、5、0；0、0、5"><span class="matrix-grid" style="--cols:3" aria-hidden="true"><span>5</span><span>1</span><span>0</span><span>0</span><span>5</span><span>0</span><span>0</span><span>0</span><span>5</span></span></span></div></li></ol>
+<p>如果同一项是 (t − 2)²(t + 1)，它含两个不同的一次因子的幂，要拆成 J₂(2) 和 J₁(−1)。<strong>指数决定块大小，因子的根决定块上写哪个数。</strong></p>
+</section>
+<section id="worked"><div class="section-num">02</div><h2>跟做一道求 J 和 T 的题</h2>
+<p>题目给出下面的 A，要求写出若当标准形 J，找一个可逆矩阵 T 使 T⁻¹AT = J，再写最小多项式。先把三个目标分开：<strong>J 告诉我们需要几块，T 告诉我们用哪几列实现这些块，m(t) 由每个特征值的最大块读出。</strong></p>
+<div class="equation">A = <span class="matrix" role="img" aria-label="3 行 3 列，2、0、1；0、2、0；0、2、4"><span class="matrix-grid" style="--cols:3" aria-hidden="true"><span>2</span><span>0</span><span>1</span><span>0</span><span>2</span><span>0</span><span>0</span><span>2</span><span>4</span></span></span></div>
+<ol class="steps worked-steps"><li><h4>先求特征值，数出各自出现几次</h4><p>这个 A 既有右上方的 1，也有左下方的 2，所以不能按三角矩阵直接读对角线。看 tI − A 的第二行，只有中间一项非零，沿这一行展开只留一个子式。</p><div class="equation">tI − A = <span class="matrix" role="img" aria-label="3 行 3 列，t − 2、0、−1；0、t − 2、0；0、−2、t − 4"><span class="matrix-grid" style="--cols:3" aria-hidden="true"><span>t − 2</span><span>0</span><span>−1</span><span>0</span><span>t − 2</span><span>0</span><span>0</span><span>−2</span><span>t − 4</span></span></span></div><p>去掉第 2 行和第 2 列，留下左上 t − 2、右上 −1、左下 0、右下 t − 4 的二阶矩阵。第 2 行第 2 列的符号为正。</p><div class="equation">det(tI − A) = (t − 2)[(t − 2)(t − 4) − (−1)·0] = (t − 2)²(t − 4)</div><p>因此 λ = 2 的代数重数是 2，λ = 4 的代数重数是 1。</p></li>
+<li><h4>解 λ = 2 的普通特征向量，判断块大小</h4><p>令 N = A − 2I。三个对角元素分别做 2 − 2、2 − 2、4 − 2，其他位置保持不动。现在解 Nv = 0。</p><div class="equation">N = <span class="matrix" role="img" aria-label="3 行 3 列，0、0、1；0、0、0；0、2、2"><span class="matrix-grid" style="--cols:3" aria-hidden="true"><span>0</span><span>0</span><span>1</span><span>0</span><span>0</span><span>0</span><span>0</span><span>2</span><span>2</span></span></span></div><p class="solution-work">第 1 行给 x₃ = 0。<br>第 2 行是 0 = 0。<br>第 3 行给 2x₂ + 2x₃ = 0。把 x₃ = 0 代进去，得 2x₂ = 0，所以 x₂ = 0。</p><p>两条有效方程都没有 x₁，所以它可以自由取。所有解为 (x₁, 0, 0)ᵀ；取 x₁ = 1，得到 v = (1, 0, 0)ᵀ。λ = 2 只有一个独立方向，因此只给一个块；这个块要占两维，所以是 J₂(2)。λ = 4 只占一维，只能是 J₁(4)。</p></li>
+<li><h4>为 λ = 2 补一列，解 Nw = v</h4><p>普通特征向量只够一列，还缺二阶块的第二列。令 w = (w₁, w₂, w₃)ᵀ。左边还是刚才那个 N，但右边改为 v = (1, 0, 0)ᵀ，这次是非齐次方程。</p><div class="equation"><span class="matrix" role="img" aria-label="3 行 3 列，0、0、1；0、0、0；0、2、2"><span class="matrix-grid" style="--cols:3" aria-hidden="true"><span>0</span><span>0</span><span>1</span><span>0</span><span>0</span><span>0</span><span>0</span><span>2</span><span>2</span></span></span><span class="matrix" role="img" aria-label="3 行 1 列，w₁；w₂；w₃"><span class="matrix-grid" style="--cols:1" aria-hidden="true"><span>w₁</span><span>w₂</span><span>w₃</span></span></span> = <span class="matrix" role="img" aria-label="3 行 1 列，1；0；0"><span class="matrix-grid" style="--cols:1" aria-hidden="true"><span>1</span><span>0</span><span>0</span></span></span></div><p class="solution-work">第 1 行给 w₃ = 1。<br>第 2 行是 0 = 0。<br>第 3 行给 2w₂ + 2w₃ = 0。代入 w₃ = 1，得到 2w₂ + 2 = 0，所以 w₂ = −1。</p><p>没有方程限制 w₁。这里可以取 w₁ = 0，因为 w₃ 已经是 1，整个向量不会变成零。于是 w = (0, −1, 1)ᵀ。检查 Nw = (1, 0, 0)ᵀ = v，链就接上了。</p></li>
+<li><h4>为 λ = 4 找一列普通特征向量</h4><p>一阶块只要一个普通特征向量。回到原矩阵减 4I，设 u = (y₁, y₂, y₃)ᵀ，再解 (A − 4I)u = 0。</p><div class="equation">A − 4I = <span class="matrix" role="img" aria-label="3 行 3 列，−2、0、1；0、−2、0；0、2、0"><span class="matrix-grid" style="--cols:3" aria-hidden="true"><span>−2</span><span>0</span><span>1</span><span>0</span><span>−2</span><span>0</span><span>0</span><span>2</span><span>0</span></span></span></div><p class="solution-work">第 1 行：−2y₁ + y₃ = 0，所以 y₃ = 2y₁。<br>第 2 行：−2y₂ = 0，所以 y₂ = 0。<br>第 3 行：2y₂ = 0，给出同一个条件。</p><p>取 y₁ = 1，按前两条关系得到 y₂ = 0、y₃ = 2，所以 u = (1, 0, 2)ᵀ。</p></li>
+<li><h4>按链的顺序把三个向量放进 T</h4><p>我们把 λ = 2 的块放前面，所以第 1、2 列依次是 v、w。λ = 4 的一阶块放后面，第 3 列就是 u。w 必须紧跟 v，才能让 J 的右上角出现 1。</p><div class="equation">T = [v, w, u] = <span class="matrix" role="img" aria-label="3 行 3 列，1、0、1；0、−1、0；0、1、2"><span class="matrix-grid" style="--cols:3" aria-hidden="true"><span>1</span><span>0</span><span>1</span><span>0</span><span>−1</span><span>0</span><span>0</span><span>1</span><span>2</span></span></span></div><div class="equation">J = diag(J₂(2), J₁(4)) = <span class="matrix" role="img" aria-label="3 行 3 列，2、1、0；0、2、0；0、0、4"><span class="matrix-grid" style="--cols:3" aria-hidden="true"><span>2</span><span>1</span><span>0</span><span>0</span><span>2</span><span>0</span><span>0</span><span>0</span><span>4</span></span></span></div><p>沿 T 的第二行展开行列式，只有中间的 −1 非零。剩下的子式是 1·2 − 1·0 = 2，所以 det T = (−1)·2 = −2，T 可逆。</p></li>
+<li><h4>逐列验算 AT = TJ，再写 m(t)</h4><p>AT 的三列分别是 Av、Aw、Au。TJ 的三列由 J 的三列读出，分别应该是 2v、v + 2w、4u。逐列比较，就能定位到底是哪一列算错。</p><p class="solution-work">Av = (2, 0, 0)ᵀ = 2v。<br>Aw = (1, −2, 2)ᵀ，而 v + 2w = (1, 0, 0)ᵀ + (0, −2, 2)ᵀ，正好一样。<br>Au = (4, 0, 8)ᵀ = 4u。</p><p>因此 AT = TJ，且 T 可逆，得到 T⁻¹AT = J。最后，λ = 2 的最大块是 2 阶，λ = 4 的最大块是 1 阶，所以</p><div class="equation">m(t) = (t − 2)²(t − 4)</div></li></ol>
+<div class="callout"><strong>如果今天卡在 T</strong><p>先写出 J 和最小多项式。再把卡点缩小到「解 Nv = 0 找第一列」还是「解 Nw = v 找第二列」。这两步左边相同，右边不同，做题时可以把右边圈出来。</p></div>
+<details><summary>进阶备查 重根更多时怎样数块</summary><p>固定 λ，令 N = A − λI，记 dₖ = dim ker(Nᵏ)，并令 d₀ = 0。对一个大小为 s 的 λ 块，前 k 次沿链往前移，贡献 min(k, s) 个零方向；其他特征值对应的块在减去 λI 后仍可逆，所以不贡献。于是 dₖ − dₖ₋₁ 就是大小至少为 k 的块的个数。例如 d₁ = 2、d₂ = 3、d₃ = 3，说明一共两个块，其中一个至少二阶，没有三阶块，所以块大小是 2 和 1。</p></details>
+</section>
+<section id="practice"><div class="section-num">03</div><h2>独立练四道题</h2>
+<p>第 1、2 题对应青岛 2024 年的读块、读 Smith 形题型。第 4 题对应哈尔滨 2024 年的构造变换矩阵题型。练习都换了数字。每道题先自己写起手式，卡住再展开提示。</p>
+<div class="exercise" id="q1">
+<div class="ex-top"><span class="ex-no">01</span><div><p class="eyebrow">先拿小题</p><h3>从 J 读最小多项式</h3></div></div>
+<div class="equation">J = <span class="matrix" role="img" aria-label="5 行 5 列，3、1、0、0、0；0、3、0、0、0；0、0、3、0、0；0、0、0、−1、1；0、0、0、0、−1"><span class="matrix-grid" style="--cols:5" aria-hidden="true"><span>3</span><span>1</span><span>0</span><span>0</span><span>0</span><span>0</span><span>3</span><span>0</span><span>0</span><span>0</span><span>0</span><span>0</span><span>3</span><span>0</span><span>0</span><span>0</span><span>0</span><span>0</span><span>−1</span><span>1</span><span>0</span><span>0</span><span>0</span><span>0</span><span>−1</span></span></span></div><p>写出各若当块，并求 J 的特征多项式和最小多项式。</p>
+<label class="work-label" for="work-1">我的演算</label><textarea id="work-1" rows="3" spellcheck="false" placeholder="先写起手式，再把每一步算出来。"></textarea>
+<details><summary>看起手提示</summary><p>盯住紧挨主对角线的上方一格。那里是 1 就继续同一个块，是 0 就在这里断开。</p></details>
+<details class="solution"><summary>看逐步答案与讲解</summary>
+<div class="solution-route"><p><strong>先读题</strong> 先标出矩阵里哪些对角位置连在一起，再分别计算两个多项式的指数。</p><p><strong>解题路线</strong> 用紧邻对角线的 1 找块的边界。对同一个 λ，分别求块大小的和与最大值。</p></div>
+<ol class="steps solution-steps"><li><h4>沿对角线从左到右切块</h4><p>第 1 行第 2 列是 1，第 1、2 个对角位置连成 J₂(3)。第 2 行第 3 列是 0，所以第 3 个位置单独是 J₁(3)。第 3 行第 4 列是 0，另开一块。第 4 行第 5 列是 1，所以最后两格组成 J₂(−1)。</p></li>
+<li><h4>求特征多项式时按对角线出现次数计</h4><p>J 是上三角矩阵，det(tI − J) 直接把对角线相乘。3 出现 2 + 1 = 3 次，−1 出现 2 次。</p><div class="equation">χ(t) = (t − 3)³(t + 1)²</div></li>
+<li><h4>求最小多项式时只取各特征值的最大块</h4><p>λ = 3 有 2 阶和 1 阶两块，(t − 3)² 已经能让两块都归零，指数 1 则清不掉二阶块的 1。λ = −1 只有一块，大小为 2，所以用 (t + 1)²。</p><div class="equation">m(t) = (t − 3)²(t + 1)²</div></li>
+<li><h4>核对块大小和两个多项式的关系</h4><p>块大小 2 + 1 + 2 = 5，正好是矩阵阶数。m(t) 的每个指数都没有超过 χ(t) 对应的指数，因此 m(t) 整除 χ(t)，检查通过。</p></li></ol>
+<p class="solution-note"><strong>卷面答案</strong> J = diag(J₂(3), J₁(3), J₂(−1))，χ(t) = (t − 3)³(t + 1)²，m(t) = (t − 3)²(t + 1)²。</p>
+<p class="solution-note"><strong>容易丢分的地方</strong> 第三个 3 前面没有 1 和它相连，所以它单独是一个块。不能因为三个对角元都等于 3，就把它们并成三阶块。</p>
+<p class="verify"><strong>盖住答案试着说</strong> 同一个特征值有 2 阶和 1 阶两块，为什么两个多项式分别写 3 次和 2 次？</p></details>
+<label class="check"><input type="checkbox" data-check="1"> 我能独立完成这题</label></div>
+<div class="exercise" id="q2">
+<div class="ex-top"><span class="ex-no">02</span><div><p class="eyebrow">先拿小题</p><h3>从 Smith 形拆出块</h3></div></div>
+<p>已知 tI − A 的 Smith 标准形如下。写出初等因子、若当标准形和最小多项式。</p><div class="equation">S(t) = diag(1, 1, t − 3, (t − 3)²(t + 1))</div>
+<label class="work-label" for="work-2">我的演算</label><textarea id="work-2" rows="3" spellcheck="false" placeholder="先写起手式，再把每一步算出来。"></textarea>
+<details><summary>看起手提示</summary><p>跳过两个 1，分开读后两项。最后一项虽然是一项，却含有两个不同的一次因子的幂。</p></details>
+<details class="solution"><summary>看逐步答案与讲解</summary>
+<div class="solution-route"><p><strong>先读题</strong> 已知的是 tI − A 的不变因子。要先把这些多项式拆成初等因子，再逐个换成若当块。</p><p><strong>解题路线</strong> 跳过常数 1 → 对每个不变因子分别做因式分解 → 一项幂换一块。</p></div>
+<ol class="steps solution-steps"><li><h4>把四个对角项逐个看</h4><p>前两项都是 1，没有根，跳过。第三项 t − 3 本身是一次因子的幂。第四项 (t − 3)²(t + 1) 要拆成 (t − 3)² 和 t + 1 两个初等因子。</p><div class="equation">初等因子：t − 3，(t − 3)²，t + 1</div></li>
+<li><h4>逐个把根和指数换成块</h4><p>t − 3 的根是 3，指数是 1，得到 J₁(3)。(t − 3)² 的根仍是 3，指数是 2，得到 J₂(3)。t + 1 = t − (−1)，根是 −1，指数是 1，得到 J₁(−1)。</p><div class="equation">J = diag(J₂(3), J₁(3), J₁(−1)) = <span class="matrix" role="img" aria-label="4 行 4 列，3、1、0、0；0、3、0、0；0、0、3、0；0、0、0、−1"><span class="matrix-grid" style="--cols:4" aria-hidden="true"><span>3</span><span>1</span><span>0</span><span>0</span><span>0</span><span>3</span><span>0</span><span>0</span><span>0</span><span>0</span><span>3</span><span>0</span><span>0</span><span>0</span><span>0</span><span>−1</span></span></span></div></li>
+<li><h4>求最小多项式并核对</h4><p>对 λ = 3 取最大块 2，对 λ = −1 取最大块 1，得 m(t) = (t − 3)²(t + 1)。它也等于最后一个不变因子。块大小相加为 2 + 1 + 1 = 4，和题设一致。</p></li></ol>
+<p class="solution-note"><strong>卷面答案</strong> 初等因子为 t − 3、(t − 3)²、t + 1；J = diag(J₂(3), J₁(3), J₁(−1))；m(t) = (t − 3)²(t + 1)。</p>
+<p class="solution-note"><strong>容易丢分的地方</strong> 最后一项的总次数是 3，但不能读成一个三阶块，因为里面有两个不同的根。别把 t + 1 的根读成 1。</p>
+<p class="verify"><strong>盖住答案试着说</strong> 为什么最后一个不变因子会贡献两个块，但仍只算一个不变因子？</p></details>
+<label class="check"><input type="checkbox" data-check="2"> 我能独立完成这题</label></div>
+<div class="exercise" id="q3">
+<div class="ex-top"><span class="ex-no">03</span><div><p class="eyebrow">判断块大小</p><h3>有重根时先数独立方向</h3></div></div>
+<div class="equation">C = <span class="matrix" role="img" aria-label="3 行 3 列，3、0、1；0、3、0；0、0、5"><span class="matrix-grid" style="--cols:3" aria-hidden="true"><span>3</span><span>0</span><span>1</span><span>0</span><span>3</span><span>0</span><span>0</span><span>0</span><span>5</span></span></span></div><p>求 C 的若当标准形和最小多项式。</p>
+<label class="work-label" for="work-3">我的演算</label><textarea id="work-3" rows="3" spellcheck="false" placeholder="先写起手式，再把每一步算出来。"></textarea>
+<details><summary>看起手提示</summary><p>λ = 3 的代数重数是 2。写出 C − 3I 后，先看有几条有效方程、留下几个自由变量。</p></details>
+<details class="solution"><summary>看逐步答案与讲解</summary>
+<div class="solution-route"><p><strong>先读题</strong> 题目要的是 J 和 m(t)。λ = 3 出现两次，有可能是一块二阶，也有可能是两块一阶。</p><p><strong>解题路线</strong> 先数对角线上 λ 出现的次数，再解 (C − 3I)x = 0，看看 2 个位置要分给几块。</p></div>
+<ol class="steps solution-steps"><li><h4>读特征值和代数重数</h4><p>C 的主对角线下方全是零，是上三角矩阵。det(tI − C) 就是 (t − 3)(t − 3)(t − 5)。所以 λ = 3 出现两次，λ = 5 出现一次。</p></li>
+<li><h4>写出 C − 3I 并数自由变量</h4><p>对角线减 3 后是 0、0、2，其他数不动。第 1 行给 x₃ = 0，第 2 行是 0 = 0，第 3 行给 2x₃ = 0，重复了第一条限制。</p><div class="equation">C − 3I = <span class="matrix" role="img" aria-label="3 行 3 列，0、0、1；0、0、0；0、0、2"><span class="matrix-grid" style="--cols:3" aria-hidden="true"><span>0</span><span>0</span><span>1</span><span>0</span><span>0</span><span>0</span><span>0</span><span>0</span><span>2</span></span></span></div><p class="solution-work">所以 x₁ 和 x₂ 都能独立选，所有解是 (x₁, x₂, 0)ᵀ。分别取 (x₁,x₂) = (1,0) 与 (0,1)，得到两个独立方向。</p></li>
+<li><h4>把两个方向换成两个一阶块</h4><p>λ = 3 的几何重数是 2，所以需要两个块；总代数重数又只有 2，这两个块只能各占 1 阶。λ = 5 的代数重数是 1，只能是一阶块。</p><div class="equation">J = diag(3, 3, 5)， m(t) = (t − 3)(t − 5)</div></li>
+<li><h4>代回去检查最小多项式</h4><p>m(C) = (C − 3I)(C − 5I)。C − 3I 只有第三列非零，C − 5I 的第三行全为 0，两者相乘为零。只用一个一次因子不够，因为 C 同时有 3 和 5 两个特征值。</p></li></ol>
+<p class="solution-note"><strong>卷面答案</strong> J = diag(3, 3, 5)，m(t) = (t − 3)(t − 5)。</p>
+<p class="solution-note"><strong>容易丢分的地方</strong> C 的右上方有一个 1，但题目给的是原矩阵 C，还没化成若当形，不能看见 1 就断定有二阶块。</p>
+<p class="verify"><strong>盖住答案试着说</strong> λ = 3 出现两次，这题为什么不需要补广义特征向量？</p></details>
+<label class="check"><input type="checkbox" data-check="3"> 我能独立完成这题</label></div>
+<div class="exercise" id="q4">
+<div class="ex-top"><span class="ex-no">04</span><div><p class="eyebrow">按大题练</p><h3>构造 T 并逐列验算</h3></div></div>
+<div class="equation">B = <span class="matrix" role="img" aria-label="3 行 3 列，1、1、0；0、1、0；0、2、3"><span class="matrix-grid" style="--cols:3" aria-hidden="true"><span>1</span><span>1</span><span>0</span><span>0</span><span>1</span><span>0</span><span>0</span><span>2</span><span>3</span></span></span></div><p>求 J、最小多项式和一个满足 T⁻¹BT = J 的可逆矩阵 T。</p>
+<label class="work-label" for="work-4">我的演算</label><textarea id="work-4" rows="3" spellcheck="false" placeholder="先写起手式，再把每一步算出来。"></textarea>
+<details><summary>看起手提示</summary><p>先求 N = B − I 的核。找到 λ = 1 的普通特征向量 v 后，保留 N，把方程右边换成 v，去求 w。</p></details>
+<details class="solution"><summary>看逐步答案与讲解</summary>
+<div class="solution-route"><p><strong>先读题</strong> 这题要交 J、m(t) 和 T。先决定每个块占几列，再逐个找能放进去的向量。</p><p><strong>解题路线</strong> 先找 λ = 1 的链头 v 和第二列 w，再找 λ = 3 的普通特征向量 u。</p></div>
+<ol class="steps solution-steps"><li><h4>展开行列式，确定特征值</h4><p>看 tI − B 的第二行，只有 t − 1 一项非零。沿第二行展开，留下的二阶子式的对角线是 t − 1 和 t − 3，非对角线为 0。</p><div class="equation">det(tI − B) = (t − 1)·(t − 1)(t − 3) = (t − 1)²(t − 3)</div></li>
+<li><h4>解 Nv = 0，找 λ = 1 的链头</h4><p>对角线减 1 得 0、0、2，其他位置照抄。设 v = (x₁,x₂,x₃)ᵀ，第 1 行要求 x₂ = 0，第 2 行给 0 = 0，第 3 行要求 2x₂ + 2x₃ = 0。</p><div class="equation">N = B − I = <span class="matrix" role="img" aria-label="3 行 3 列，0、1、0；0、0、0；0、2、2"><span class="matrix-grid" style="--cols:3" aria-hidden="true"><span>0</span><span>1</span><span>0</span><span>0</span><span>0</span><span>0</span><span>0</span><span>2</span><span>2</span></span></span></div><p>代入 x₂ = 0，得 x₃ = 0，只有 x₁ 自由。取 x₁ = 1，得 v = (1, 0, 0)ᵀ。λ = 1 有一个独立方向、占两维，所以要一个 J₂(1)。</p></li>
+<li><h4>把右边换成 v，解 Nw = v</h4><p>设 w = (w₁,w₂,w₃)ᵀ。这次第 1 行等于 v 的第一个分量 1，所以 w₂ = 1；第 2 行是 0 = 0；第 3 行仍等于 0，所以 2w₂ + 2w₃ = 0。</p><p class="solution-work">代入 w₂ = 1，得 2 + 2w₃ = 0，所以 w₃ = −1。w₁ 没有限制，取 0。于是 w = (0, 1, −1)ᵀ。</p></li>
+<li><h4>回原矩阵求 λ = 3 的普通特征向量</h4><p>把 B 的对角线减 3。设 u = (y₁,y₂,y₃)ᵀ，第 1 行给 −2y₁ + y₂ = 0，第 2 行给 −2y₂ = 0，第 3 行给 2y₂ = 0。</p><div class="equation">B − 3I = <span class="matrix" role="img" aria-label="3 行 3 列，−2、1、0；0、−2、0；0、2、0"><span class="matrix-grid" style="--cols:3" aria-hidden="true"><span>−2</span><span>1</span><span>0</span><span>0</span><span>−2</span><span>0</span><span>0</span><span>2</span><span>0</span></span></span></div><p>从第 2 行得 y₂ = 0，再代回第 1 行得 y₁ = 0。令剩下的 y₃ = 1，得 u = (0, 0, 1)ᵀ。</p></li>
+<li><h4>排好 T 的列，再验算</h4><p>把 v、w 紧挨着排在前两列，u 放最后。T 是下三角矩阵，三个对角元都是 1，所以 det T = 1，它可逆。</p><div class="equation">T = <span class="matrix" role="img" aria-label="3 行 3 列，1、0、0；0、1、0；0、−1、1"><span class="matrix-grid" style="--cols:3" aria-hidden="true"><span>1</span><span>0</span><span>0</span><span>0</span><span>1</span><span>0</span><span>0</span><span>−1</span><span>1</span></span></span>， J = <span class="matrix" role="img" aria-label="3 行 3 列，1、1、0；0、1、0；0、0、3"><span class="matrix-grid" style="--cols:3" aria-hidden="true"><span>1</span><span>1</span><span>0</span><span>0</span><span>1</span><span>0</span><span>0</span><span>0</span><span>3</span></span></span></div><p class="solution-work">Bv = (1, 0, 0)ᵀ = v。<br>Bw = (1, 1, 2 − 3)ᵀ = (1, 1, −1)ᵀ = v + w。<br>Bu = (0, 0, 3)ᵀ = 3u。</p><p>三列都与 TJ 相同，所以 BT = TJ，得到 T⁻¹BT = J。最大块大小分别是 2 和 1，因此 m(t) = (t − 1)²(t − 3)。</p></li></ol>
+<p class="solution-note"><strong>卷面答案</strong> J = diag(J₂(1), J₁(3))，m(t) = (t − 1)²(t − 3)，T 的列依次为 (1, 0, 0)ᵀ、(0, 1, −1)ᵀ、(0, 0, 1)ᵀ。</p>
+<p class="solution-note"><strong>容易丢分的地方</strong> 把 w 放在 v 前面会改变对应的矩阵。要得到题里这种上方有 1 的若当块，T 必须先放 v，再放 w。</p>
+<p class="verify"><strong>盖住答案试着说</strong> 为什么求 w 时第一条方程是 w₂ = 1，而求 v 时同一条是 x₂ = 0？</p></details>
+<label class="check"><input type="checkbox" data-check="4"> 我能独立完成这题</label></div>
+<div class="callout finish"><strong>今天的收工标准</strong><p>先完成第 1、2 题，再做第 3 题。如果还有时间，做第 4 题到能独立写出 Nv = 0 和 Nw = v，算出两列后用 BT = TJ 验算。明天算矩阵函数时，会直接用到块的大小和这些链。</p></div>
+</section>
+<section id="sources"><div class="section-num">04</div><h2>讲义与辅导</h2>
+<p>这些材料用来核对定义和方法。站内的例题和练习可以直接做，不需要先读完外部讲义。</p>
+<ul class="source-list">
+<li><span>华东师范大学 · 潘建瑜</span><a href="https://math.ecnu.edu.cn/~jypan/Teaching/MC/mc_202502.pdf">矩阵计算讲义 §1.4.1</a><p>核对若当块、几何重数，以及为什么最小多项式取各特征值的最大块。</p></li>
+<li><span>MIT OpenCourseWare · 18.06</span><a href="https://www.ocw.mit.edu/courses/18-06sc-linear-algebra-fall-2011/pages/positive-definite-matrices-and-applications/similar-matrices-and-jordan-form/">第 28 课 相似矩阵和若当形</a><p>看为什么换基改变的是矩阵表示，以及为何要在对角线上方用 1 记录链。</p></li>
+<li><span>科罗拉多大学博尔德分校 · Math 6140</span><a href="https://math.colorado.edu/~mayr/teaching/math6140spring25/PID3.pdf">§12.3 Jordan Canonical Form</a><p>核对不变因子、初等因子与若当块之间的对应关系。</p></li>
+<li><span>知乎 · 补充直观阅读</span><a href="https://www.zhihu.com/tardis/bd/ans/2728191111">为什么要引入若尔当标准型</a><p>用小矩阵比较基向量变换后是否带出另一个方向。用于帮助建立直观，定义与计算以大学讲义为准。</p></li>
+</ul></section>
+</div></div></article></main>
+<footer class="site-footer"><div class="wrap footer-inner"><div><strong>矩阵论笔记</strong><p>第二天 · 若当形、最小多项式、变换矩阵</p></div><a href="./index.html">回到第一天</a><a href="https://github.com/waowaohh/matrix-notes/blob/main/TEACHING.md">讲题模板</a><a href="#top">回到顶部 ↑</a></div></footer>
+</body></html>
