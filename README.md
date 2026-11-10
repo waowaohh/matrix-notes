@@ -7,3 +7,4 @@
 - GitHub Pages 从 main 分支的根目录发布。
 - 博客布局改编自 [Jekyll Minima 2.5.2](https://github.com/jekyll/minima/tree/v2.5.2)，保留原模板许可于 LICENSE.minima。
 - 大学讲义与视频的链接在文章末尾。站内讲解和示例为重新编写的学习材料。
+- 后续例题和练习统一按 [矩阵论讲题模板](TEACHING.md) 编写。
